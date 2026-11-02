@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SharpVala")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b25f4caba5abc2ec612c2f91eae759a880b2250")]
 [assembly: System.Reflection.AssemblyProductAttribute("SharpVala")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SharpVala")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

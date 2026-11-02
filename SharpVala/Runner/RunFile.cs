@@ -1,10 +1,12 @@
 using SharpVala.ErrorHandling;
+using static SharpVala.ErrorHandling.Error;
+using static SharpVala.Runner.Run;
 
-namespace SharpVala;
+namespace SharpVala.Runner;
 
 
 
-class FileRunner
+public class FileRunner
 {
         public static void runFile(string path)
     {

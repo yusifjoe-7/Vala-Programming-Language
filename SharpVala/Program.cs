@@ -1,6 +1,6 @@
 ﻿
+using SharpVala.Runner;
 
-using SharpVala;
 
 if (args.Length > 1)
 {

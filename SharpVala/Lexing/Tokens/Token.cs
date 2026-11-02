@@ -1,4 +1,4 @@
-namespace SharpVala.Tokens;
+namespace SharpVala.Lexing.Tokens;
 
 public class Token
 {

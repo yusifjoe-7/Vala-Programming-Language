@@ -1,4 +1,4 @@
-namespace SharpVala;
+namespace SharpVala.Runner;
 
 
 class Run

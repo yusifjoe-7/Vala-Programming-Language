@@ -1,9 +1,9 @@
 using SharpVala.ErrorHandling;
 
-namespace SharpVala;
+namespace SharpVala.Runner;
 
 
-class PromptRunner
+public class PromptRunner
 {
     public static void runPrompt()
     {
@@ -12,6 +12,7 @@ class PromptRunner
             Console.Write("==> ");
             string? inputLine = Console.ReadLine();
             if (inputLine == null) break;
+            // if (String.IsNullOrEmpty(inputLine)) break;
             Run.run(inputLine);
             Error.setNoErrors();
             

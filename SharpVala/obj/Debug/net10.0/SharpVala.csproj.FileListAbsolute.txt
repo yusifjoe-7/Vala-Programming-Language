@@ -12,3 +12,18 @@
 /home/joe/Data/programming projects/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.pdb
 /home/joe/Data/programming projects/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.genruntimeconfig.cache
 /home/joe/Data/programming projects/Vala PL/SharpVala/obj/Debug/net10.0/ref/SharpVala.dll
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.GeneratedMSBuildEditorConfig.editorconfig
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.AssemblyInfoInputs.cache
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.AssemblyInfo.cs
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.csproj.CoreCompileInputs.cache
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.sourcelink.json
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.dll
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/refint/SharpVala.dll
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.pdb
+/home/joe/Vala PL/SharpVala/bin/Debug/net10.0/SharpVala
+/home/joe/Vala PL/SharpVala/bin/Debug/net10.0/SharpVala.deps.json
+/home/joe/Vala PL/SharpVala/bin/Debug/net10.0/SharpVala.runtimeconfig.json
+/home/joe/Vala PL/SharpVala/bin/Debug/net10.0/SharpVala.dll
+/home/joe/Vala PL/SharpVala/bin/Debug/net10.0/SharpVala.pdb
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/SharpVala.genruntimeconfig.cache
+/home/joe/Vala PL/SharpVala/obj/Debug/net10.0/ref/SharpVala.dll

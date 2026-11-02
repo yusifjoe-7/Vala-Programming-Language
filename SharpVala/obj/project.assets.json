@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/joe/Data/programming projects/Vala PL/SharpVala/SharpVala.csproj",
+      "projectUniqueName": "/home/joe/Vala PL/SharpVala/SharpVala.csproj",
       "projectName": "SharpVala",
-      "projectPath": "/home/joe/Data/programming projects/Vala PL/SharpVala/SharpVala.csproj",
+      "projectPath": "/home/joe/Vala PL/SharpVala/SharpVala.csproj",
       "packagesPath": "/home/joe/.nuget/packages/",
-      "outputPath": "/home/joe/Data/programming projects/Vala PL/SharpVala/obj/",
+      "outputPath": "/home/joe/Vala PL/SharpVala/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/joe/.nuget/NuGet/NuGet.Config"
