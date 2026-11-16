@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SharpVala.Tests/SharpVala.Tests.csproj" />
+  <Project Path="SharpVala/SharpVala.csproj" />
+</Solution>

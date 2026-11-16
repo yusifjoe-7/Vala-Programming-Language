@@ -5,7 +5,7 @@ namespace SharpVala.Lexing.Scanner;
 
 public class ScanTokens
 {
-    private ScannerHelperMethods Helper;
+    private readonly ScannerHelperMethods Helper;
 
 
     public ScanTokens(string source)
@@ -89,10 +89,8 @@ public class ScanTokens
                     break;
             }
             Helper.MoveStartToCurrent();
-            Scan();
         }
         Helper.TokensPush(new Token(TokenType.EOF, "", null, Helper.GetLines()));
         return Helper.TheReturner();
     }
-    
 }

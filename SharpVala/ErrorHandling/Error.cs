@@ -1,3 +1,5 @@
+using SharpVala.Lexing.Tokens;
+
 namespace SharpVala.ErrorHandling;
 
 public class Error
@@ -10,14 +12,22 @@ public class Error
     }
     public static void addError(int line, string message)
     {
-        reporte(line,"" , message);
+        report(line,"" , message);
     }
 
-    private static void reporte(int line, string where, string message)
+    private static void report(int line, string where, string message)
     {
         Console.WriteLine(
             "[line " + line + "] Error" + where + ": " + message
         );
         hadError = true;
     }
+
+    public static void addError(Token token, String message) {
+    if (token.type == TokenType.EOF) {
+      report(token.line, " at end", message);
+    } else {
+      report(token.line, " at '" + token.lexeme + "'", message);
+    }
+  }
 }

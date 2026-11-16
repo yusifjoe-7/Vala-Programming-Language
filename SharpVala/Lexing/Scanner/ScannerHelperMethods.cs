@@ -1,11 +1,12 @@
 using SharpVala.ErrorHandling;
 using SharpVala.Lexing.Tokens;
+using System.Globalization;
 
 namespace SharpVala.Lexing.Scanner;
 
 public class ScannerHelperMethods
 {
-    private Scanner scanner;
+    private readonly Scanner scanner;
 
     public ScannerHelperMethods(string s)
     {
@@ -43,7 +44,7 @@ public class ScannerHelperMethods
 
     public void AddToken(TokenType type, Object literal)
     {
-        String text = scanner.GetSource.Substring(scanner.GetStart, scanner.GetCurrent);
+        String text = scanner.GetSource.Substring(scanner.GetStart, scanner.GetCurrent - scanner.GetStart);
         scanner.TokensPush(new Token(type, text, literal, scanner.GetLines));
     }
 
@@ -59,12 +60,14 @@ public class ScannerHelperMethods
 
     //---
 
-    public char Peek(int? i = null)
+    public char Peek(int offset = 0)
     {
-        if (isAtEnd()) return '\0';
-        return i != null ? scanner.GetSource[scanner.GetCurrent + i.Value]
-        :
-         scanner.GetSource[scanner.GetCurrent];
+        int index = scanner.GetCurrent + offset;
+
+        if (index >= scanner.GetSource.Length)
+            return '\0';
+
+        return scanner.GetSource[index];
     }
 
     //---
@@ -84,7 +87,7 @@ public class ScannerHelperMethods
         }
 
 
-        string value = scanner.GetSource.Substring(scanner.GetStart + 1, scanner.GetCurrent);
+        string value = scanner.GetSource.Substring(scanner.GetStart + 1,  scanner.GetCurrent - scanner.GetStart -1 );
         scanner.NextCurrent();
         AddToken(TokenType.STRING, value);
 
@@ -108,7 +111,9 @@ public class ScannerHelperMethods
         }
         AddToken(
             TokenType.NUMBER,
-            Double.Parse(scanner.GetSource.Substring(scanner.GetStart, scanner.GetCurrent))
+            Double.Parse(scanner.GetSource.Substring(scanner.GetStart, scanner.GetCurrent - scanner.GetStart),
+            CultureInfo.InvariantCulture
+            )
         );
     }
     public bool IsAlpha(char c)
@@ -126,14 +131,13 @@ public class ScannerHelperMethods
     {
         while (isAlphaNumeric(Peek())) Advance();
 
-        string text = scanner.GetSource.Substring(scanner.GetStart, scanner.GetCurrent);
-        TokenType? type = TokensDictionary.Keywords[text];
-        if (type == null)
+        string text = scanner.GetSource.Substring(scanner.GetStart, scanner.GetCurrent - scanner.GetStart);
+        if (!TokensDictionary.Keywords.TryGetValue(text, out var type))
         {
             type = TokenType.IDENTIFIER;
         }
 
-        AddToken(TokenType.IDENTIFIER);
+        AddToken(type);
     }
   
 
