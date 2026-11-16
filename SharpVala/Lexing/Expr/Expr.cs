@@ -4,6 +4,13 @@ namespace SharpVala.Lexing.Expr;
 
 public abstract class Expr
 {
+    public interface IExprVisitor<T>
+    {
+        T VisitBinaryExpr(Expr.Binary expr);
+        T VisitGroupingExpr(Expr.Grouping expr);
+        T VisitLiteralExpr(Expr.Literal expr);
+        T VisitUnaryExpr(Expr.Unary expr);
+    }
     public abstract T Accept<T>(IExprVisitor<T> visitor);
 
     public class Binary : Expr

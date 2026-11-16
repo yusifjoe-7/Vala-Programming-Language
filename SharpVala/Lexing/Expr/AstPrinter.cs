@@ -3,7 +3,7 @@ using SharpVala.Lexing.Expr;
 
 namespace SharpVala.Lexing.Expr;
 
-public class AstPrinter : IExprVisitor<string>
+public class AstPrinter : Expr.IExprVisitor<string>
 {
     public string Print(Expr expr)
     {
