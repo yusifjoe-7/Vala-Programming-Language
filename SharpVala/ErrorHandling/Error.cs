@@ -1,3 +1,4 @@
+using SharpVala.Lexing.Interpreter;
 using SharpVala.Lexing.Tokens;
 
 namespace SharpVala.ErrorHandling;
@@ -5,6 +6,7 @@ namespace SharpVala.ErrorHandling;
 public class Error
 {
     public static bool hadError { get; private set; } = false;
+    public static bool hadRuntimeError { get; private set; } = false;
 
     public static void setNoErrors()
     {
@@ -23,11 +25,22 @@ public class Error
         hadError = true;
     }
 
-    public static void addError(Token token, String message) {
-    if (token.type == TokenType.EOF) {
+  public static void addError(Token token, string message)
+  {
+    if (token.type == TokenType.EOF)
+    {
       report(token.line, " at end", message);
-    } else {
+    }
+    else
+    {
       report(token.line, " at '" + token.lexeme + "'", message);
     }
   }
+    
+    public static void RuntimeError(RuntimeError error) {
+      Console.Error.WriteLine(error.Message +
+          "\n[line " + error.token.line + "]");
+      hadRuntimeError = true;
+    }
+  
 }
