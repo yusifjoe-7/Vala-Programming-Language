@@ -1,17 +1,32 @@
 using System.Text.Json;
 using SharpVala.ErrorHandling;
 using SharpVala.Lexing.Tokens;
-using expr  = SharpVala.Lexing.Expr.Expr;
+using SharpVala.Expr;
+using SharpVala.Interpreter;
+using expr  = SharpVala.Expr.Expr;
+using SharpVala.AStmt;
 
 
-namespace SharpVala.Lexing.Interpreter;
+namespace SharpVala.Interpreter;
 
-public class TheInterpreter : expr.IExprVisitor<object>
+public class TheInterpreter : expr.IVisitor<object>, Stmt.IVisitor<object>
 {
     private object Evaluate(expr expr)
     {
         return expr.Accept<object>(this);
     }
+
+    public object VisitExpressionStmt(Stmt.Expression stmt) {
+        Evaluate(stmt.expression);
+        return null;
+    }
+
+      public object VisitPrintStmt(Stmt.Print stmt) {
+        object value = Evaluate(stmt.expression);
+        Console.WriteLine(Stringify(value));
+        return null;
+    }
+
 
     private bool isTruthy(object Object)
     {
@@ -34,14 +49,24 @@ public class TheInterpreter : expr.IExprVisitor<object>
         return Object.ToString();
     }
 
-    public void Interpret(expr expression) { 
+
+
+    public void Interpret(List<Stmt> statements) { 
     try {
-      object value = Evaluate(expression);
-      Console.WriteLine(Stringify(value));
+      foreach(var stmt in statements)
+      {
+        Execute(stmt);
+      }
     } catch (RuntimeError error) {
       Error.RuntimeError(error);
     }
-  }
+    }
+
+
+    void Execute(Stmt stmt) {
+        stmt.Accept(this);
+    }
+
 
 
 

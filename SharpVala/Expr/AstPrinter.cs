@@ -1,9 +1,9 @@
 using System.Text;
-using SharpVala.Lexing.Expr;
+using SharpVala.Expr;
 
-namespace SharpVala.Lexing.Expr;
+namespace SharpVala.Expr;
 
-public class AstPrinter : Expr.IExprVisitor<string>
+public class AstPrinter : Expr.IVisitor<string>
 {
     public string Print(Expr expr)
     {

@@ -1,5 +1,5 @@
-using SharpVala.Lexing.Interpreter;
 using SharpVala.Lexing.Tokens;
+using SharpVala.Interpreter;
 
 namespace SharpVala.ErrorHandling;
 

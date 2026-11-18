@@ -1,6 +1,6 @@
 using SharpVala.Lexing.Tokens;
 
-namespace SharpVala.Lexing.Interpreter;
+namespace SharpVala.Interpreter;
 
 public class RuntimeError : Exception
 {

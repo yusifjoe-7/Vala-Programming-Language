@@ -1,7 +1,8 @@
 using SharpVala.Lexing.Tokens;
-using SharpVala.Lexing.Expr;
+using SharpVala.Expr;
 
-using _expr = global::SharpVala.Lexing.Expr.Expr;
+using _expr = global::SharpVala.Expr.Expr;
+using SharpVala.AStmt;
 
 namespace SharpVala.Lexing.Parser;
 
@@ -98,11 +99,28 @@ public class Parsing
         throw _error.AnError(_helper.Peek(), "Expect expression.");
     }
 
-    public _expr parse() {
-    try {
-      return Expression();
-    } catch (ErrorHandler.ParseError error) {
-      return null;
+    Stmt Statement() {
+        if (_helper.Match(TokenType.PRINT)) return PrintStatement();
+
+        return ExpressionStatement();
     }
-  }
+    Stmt PrintStatement() {
+        _expr value = Expression();
+        _error.Consume(TokenType.SEMICOLON, "Expect ';' after value.");
+        return new Stmt.Print(value);
+    }
+    Stmt ExpressionStatement() {
+        _expr expr = Expression();
+        _error.Consume(TokenType.SEMICOLON, "Expect ';' after expression.");
+        return new Stmt.Expression(expr);
+    }
+
+    public List<Stmt> parse() {
+        List<Stmt> statements = new() ;
+        while (!_helper.IsAtEnd()) {
+        statements.Add(Statement());
+        }
+
+        return statements; 
+    }
 }

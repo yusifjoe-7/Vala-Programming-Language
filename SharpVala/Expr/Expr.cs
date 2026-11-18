@@ -1,17 +1,16 @@
 using SharpVala.Lexing.Tokens;
-using SharpVala.Lexing.Expr;
-namespace SharpVala.Lexing.Expr;
+namespace SharpVala.Expr;
 
 public abstract class Expr
 {
-    public interface IExprVisitor<T>
+    public interface IVisitor<T>
     {
         T VisitBinaryExpr(Expr.Binary expr);
         T VisitGroupingExpr(Expr.Grouping expr);
         T VisitLiteralExpr(Expr.Literal expr);
         T VisitUnaryExpr(Expr.Unary expr);
     }
-    public abstract T Accept<T>(IExprVisitor<T> visitor);
+    public abstract T Accept<T>(IVisitor<T> visitor);
 
     public class Binary : Expr
     {
@@ -26,7 +25,7 @@ public abstract class Expr
             Right = right;
         }
 
-        public override T Accept<T>(IExprVisitor<T> visitor)
+        public override T Accept<T>(IVisitor<T> visitor)
             => visitor.VisitBinaryExpr(this);
     }
 
@@ -39,7 +38,7 @@ public abstract class Expr
             Expression = expression;
         }
 
-        public override T Accept<T>(IExprVisitor<T> visitor)
+        public override T Accept<T>(IVisitor<T> visitor)
             => visitor.VisitGroupingExpr(this);
     }
 
@@ -52,7 +51,7 @@ public abstract class Expr
             Value = value;
         }
 
-        public override T Accept<T>(IExprVisitor<T> visitor)
+        public override T Accept<T>(IVisitor<T> visitor)
             => visitor.VisitLiteralExpr(this);
     }
 
@@ -67,7 +66,7 @@ public abstract class Expr
             Right = right;
         }
 
-        public override T Accept<T>(IExprVisitor<T> visitor)
+        public override T Accept<T>(IVisitor<T> visitor)
             => visitor.VisitUnaryExpr(this);
     }
 }
