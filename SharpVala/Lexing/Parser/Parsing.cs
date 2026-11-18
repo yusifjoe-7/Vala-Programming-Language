@@ -16,13 +16,31 @@ public class Parsing
     {
         _helper = new Helpers(tokens);
         _error = new ErrorHandler(_helper);
-        
+
     }
 
 
     private _expr Expression() {
-        return Equality();
+        return Assignment();
     }
+
+    _expr Assignment() {
+        _expr expr = Equality();
+
+        if (_helper.Match(TokenType.EQUAL)) {
+        Token equals = _helper.Previous();
+        _expr value = Assignment();
+
+        if (expr is _expr.Variable) {
+            Token name = ((_expr.Variable)expr).Name;
+            return new _expr.Assign(name, value);
+        }
+
+        _error.AnError(equals, "Invalid assignment target."); 
+        }
+
+        return expr;
+        }
 
     private _expr Equality() {
         _expr expr = Comparison();
@@ -89,7 +107,10 @@ public class Parsing
 
     if (_helper.Match(TokenType.NUMBER, TokenType.STRING)) {
       return new _expr.Literal(_helper.Previous().literal);
-    }
+        }
+        if (_helper.Match(TokenType.IDENTIFIER)) {
+        return new _expr.Variable(_helper.Previous());
+        }
 
     if (_helper.Match(TokenType.LEFT_PAREN)) {
       _expr expr = Expression();
@@ -101,9 +122,21 @@ public class Parsing
 
     Stmt Statement() {
         if (_helper.Match(TokenType.PRINT)) return PrintStatement();
-
+        if (_helper.Match(TokenType.LEFT_BRACE)) return new Stmt.Block(Block());
         return ExpressionStatement();
     }
+
+    List<Stmt> Block() {
+        List<Stmt> statements = new();
+
+        while (!_helper.Check(TokenType.RIGHT_BRACE) && !_helper.IsAtEnd()) {
+        statements.Add(Declaration());
+        }
+
+        _error.Consume(TokenType.RIGHT_BRACE, "Expect '}' after block.");
+        return statements;
+    }
+    
     Stmt PrintStatement() {
         _expr value = Expression();
         _error.Consume(TokenType.SEMICOLON, "Expect ';' after value.");
@@ -115,10 +148,34 @@ public class Parsing
         return new Stmt.Expression(expr);
     }
 
+    Stmt Declaration() {
+        try {
+        if (_helper.Match(TokenType.LET)) return letDeclaration();
+
+        return Statement();
+        } catch (Exception error) {
+            _error.Synchronize();
+        return null;
+        }
+    }
+
+    Stmt letDeclaration() {
+        Token name = _error.Consume(TokenType.IDENTIFIER, "Expect variable name.");
+
+        _expr initializer = null;
+        if (_helper.Match(TokenType.EQUAL)) {
+        initializer = Expression();
+        }
+
+        _error.Consume(TokenType.SEMICOLON, "Expect ';' after variable declaration.");
+        return new Stmt.Let(name, initializer);
+    }
+
+
     public List<Stmt> parse() {
         List<Stmt> statements = new() ;
         while (!_helper.IsAtEnd()) {
-        statements.Add(Statement());
+        statements.Add(Declaration());
         }
 
         return statements; 

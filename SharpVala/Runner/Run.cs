@@ -8,9 +8,11 @@ namespace SharpVala.Runner;
 
 class Run
 {
-    public static void run(string source)
+    static readonly TheInterpreter interpreter = new TheInterpreter();
+
+    static public void run(string source)
     {
-        TheInterpreter interpreter = new TheInterpreter();
+        
 
         var tokens = new ScanTokens(source).Scan();
 

@@ -8,12 +8,17 @@ namespace SharpVala.Runner;
 
 public class FileRunner
 {
-        public static void runFile(string path)
+    public static void runFile(string path)
     {
-            if (File.Exists(path))
+        if (File.Exists(path))
         {
+            if (!path.EndsWith(".val"))
+            {
+                Console.WriteLine("Unknown Format");
+                Environment.Exit(3);
+            }
             string fileContent = File.ReadAllText(path);
-            
+
             if (fileContent.Length > 0)
             {
                 Run.run(fileContent);
@@ -31,6 +36,6 @@ public class FileRunner
                 Environment.Exit(2);
         }
     }
-    
+
 }
-    
+

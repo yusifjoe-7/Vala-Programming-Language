@@ -1,8 +1,6 @@
 using System.Text.Json;
 using SharpVala.ErrorHandling;
 using SharpVala.Lexing.Tokens;
-using SharpVala.Expr;
-using SharpVala.Interpreter;
 using expr  = SharpVala.Expr.Expr;
 using SharpVala.AStmt;
 
@@ -11,6 +9,8 @@ namespace SharpVala.Interpreter;
 
 public class TheInterpreter : expr.IVisitor<object>, Stmt.IVisitor<object>
 {
+    private TheEnvironment environment = new TheEnvironment();
+
     private object Evaluate(expr expr)
     {
         return expr.Accept<object>(this);
@@ -25,6 +25,34 @@ public class TheInterpreter : expr.IVisitor<object>, Stmt.IVisitor<object>
         object value = Evaluate(stmt.expression);
         Console.WriteLine(Stringify(value));
         return null;
+    }
+
+    public object VisitLetStmt(Stmt.Let stmt) {
+        object value = null;
+        if (stmt.initializer != null) {
+        value = Evaluate(stmt.initializer);
+        }
+
+        environment.Define(stmt.name.lexeme, value);
+        return null;
+    }
+
+    public object VisitBlockStmt(Stmt.Block stmt) {
+        ExecuteBlock(stmt.statements, new TheEnvironment(environment));
+        return null;
+    }
+
+    void ExecuteBlock(List<Stmt> statements, TheEnvironment _environment) {
+        TheEnvironment previous = environment;
+        try {
+        environment = _environment;
+
+        foreach (var statement in statements) {
+            Execute(statement);
+        }
+        } finally {
+        environment = previous;
+        }
     }
 
 
@@ -94,6 +122,9 @@ public class TheInterpreter : expr.IVisitor<object>, Stmt.IVisitor<object>
 
         return null;
     }
+    public object VisitVariableExpr(expr.Variable expr) {
+        return environment.Get(expr.Name);
+    }
 
     private void CheckNumberOperands(Token op, object left, object right) {
         if (right is double && left is double) return;
@@ -144,5 +175,11 @@ public class TheInterpreter : expr.IVisitor<object>, Stmt.IVisitor<object>
             }
 
         return null;
+    }
+
+    public object VisitAssignExpr(expr.Assign expr) {
+        object value = Evaluate(expr.Value);
+        environment.Assign(expr.Name, value);
+        return value;
     }
 }

@@ -23,7 +23,7 @@ public class ErrorHandler
         return new ParseError();
     }
 
-    private void Synchronize() {
+    public void Synchronize() {
         _helper.Advance();
 
         while (!_helper.IsAtEnd()) {
